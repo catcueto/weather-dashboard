@@ -8,3 +8,5 @@
         b) When user views UV index, this should be colored according to whether the conditions are favorable (green), moderate (orange), or severe (red)
         c) 5-day forecast IsNCLUDES same sections (date + icon representation + temp + wind + humidty */
 //  STEP 5: When clicking on a city in search history, then user can see current and future conditions for selected city AGAIN.
+
+const locateCity = document.getElementById("search-btn");
