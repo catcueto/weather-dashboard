@@ -1,0 +1,29 @@
+* {
+  margin: 0 auto;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+/* WEATHER BANNER */
+.weather-header {
+  padding: 1.5rem;
+  background-color: lightblue;
+  width: 100%;
+  color: darkslategrey;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* SEARCH CITY LEFT-SIDE BAR */
+.custom-form {
+  padding: 1rem;
+  background-color: darkcyan;
+  border-radius: 1rem;
+}
+
+.searchBtn {
+  background-color: lightblue;
+  border: none;
+  padding: 5px 10px 5px 10px;
+  color: darkslategrey;
+  border-radius: 1rem;
+}

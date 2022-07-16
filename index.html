@@ -26,20 +26,20 @@
 
   <body>
     <header class="header col-12 text-center">
-      <h1 class="display-3 text-light">Weather Dashboard</h1>
+      <h1 class="weather-header">Weather Dashboard</h1>
     </header>
 
     <main class="container col-12">
       <div class="row" style="height: 70vh">
-        <div class="col-3 border border-dark">
-          <h3 class="display-5 text-dark">Search for a City:</h3>
+        <div class="col-3 border custom-form">
+          <h3 class="display-5">Search for a City:</h3>
           <input
             type="text"
             class="citySearch"
             id="searchInput"
             placeholder="Virginia"
           />
-          <button id="search-btn">Search</button> <br />
+          <button class="searchBtn" id="search-btn">Search</button> <br />
           <ul class="searched-city btn-group-vertical" id="searched-city"></ul>
         </div>
         <div class="col-8 border border-dark">
