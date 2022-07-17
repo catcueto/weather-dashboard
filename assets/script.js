@@ -2,6 +2,7 @@
 const APIkey = "f231ac68ebcc12d2f0f6924e17016a6c"; // declaring APIkey
 let cityArray = []; //data is collected here
 
+//SECTION 1: SEARCH CITIES
 const searchedCity = document.getElementById("searched-city");
 
 //STORING CITIES

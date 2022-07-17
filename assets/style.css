@@ -1,23 +1,33 @@
+/* GENERAL STYLING */
 * {
   margin: 0 auto;
   font-family: Georgia, "Times New Roman", Times, serif;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
 }
 
 /* WEATHER BANNER */
-.weather-header {
-  padding: 1.5rem;
+.custom-banner,
+.jumbotron {
   background-color: lightblue;
-  width: 100%;
+  height: 2rem;
+}
+.weather-header {
   color: darkslategrey;
   text-transform: uppercase;
   font-weight: 600;
+  justify-content: center;
 }
 
 /* SEARCH CITY LEFT-SIDE BAR */
-.custom-form {
+.left-side-bar {
   padding: 1rem;
   background-color: darkcyan;
   border-radius: 1rem;
+  display: flex;
 }
 
 .searchBtn {
@@ -26,4 +36,59 @@
   padding: 5px 10px 5px 10px;
   color: darkslategrey;
   border-radius: 1rem;
+}
+
+.citySearch {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 5px 10px 5px 10px;
+}
+
+/* CURRENT WEATHER */
+.right-side-card {
+  display: flex;
+}
+
+.custom-today {
+  background-color: palevioletred;
+  border-radius: 1rem;
+}
+/* 5-DAY FORECAST */
+.title-forecast {
+  position: absolute;
+}
+.custom-forecast {
+  background-color: lightblue;
+  border: none;
+  padding: 2rem;
+  color: darkslategrey;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.card {
+  /* width: 20rem; */
+  column-gap: 2rem;
+  /* display: flex; */
+  /* height: 250px;
+  width: 200px; */
+}
+
+.five-days,
+.scales {
+  display: flex;
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.forecast-labels {
+  text-align: right;
+}
+
+.values,
+.labelDay {
+  text-align: left;
 }

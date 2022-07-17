@@ -1,54 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- ADD GOOGLE FONTS APIs -->
-    <link
-      rel="stylesheet"
-      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-    />
-    <link rel="stylesheet" href="./assets/style.css" />
-    <title>Weather Dashboard App</title>
-  </head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-  <body>
-    <header class="header col-12 text-center">
+  <!-- ADD GOOGLE FONTS APIs -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <link rel="stylesheet" href="./assets/style.css" />
+  <title>Weather Dashboard App</title>
+</head>
+
+<body>
+  <!-- DASHBOARD -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="col-12 text-center custom-banner">
       <h1 class="weather-header">Weather Dashboard</h1>
-    </header>
+    </div>
+  </div>
 
-    <main class="container col-12">
-      <div class="row" style="height: 70vh">
-        <div class="col-3 border custom-form">
-          <h3 class="display-5">Search for a City:</h3>
-          <input
-            type="text"
-            class="citySearch"
-            id="searchInput"
-            placeholder="Virginia"
-          />
-          <button class="searchBtn" id="search-btn">Search</button> <br />
-          <ul class="searched-city btn-group-vertical" id="searched-city"></ul>
+  <div class="container col-12">
+    <!-- LEFT-SIDE SEARCH BAR -->
+    <div class="left-side-bar col-3">
+      <div class="mb-3 custom-form" style="height: 90vh">
+        <h3 class="display-5">Search for a City:</h3>
+        <input type="text" class="citySearch" id="searchInput" placeholder="Virginia" />
+        <button class="searchBtn" id="search-btn">Search</button> <br />
         </div>
-        <div class="col-8 border border-dark">
-          <div id="current-weather" class="text-center"></div>
-          <div class="row forecast" style="height: 30vh">5 day forecast:</div>
-        </div>
+        <ul class="searched-city btn-group-vertical" id="searched-city"></ul>
       </div>
+
+      <!-- CURRENT CITY WEATHER -->
+      <div class="right-side-crd col-9" >
+        <div class="today-weather">
+          <div class="text-white mb-3 custom-today"  style="height: 40vh">
+            <div class="current-date" id="dateInfo"></div>
+            <div class="card-body">
+              <div class="left">
+                <img class="weather-icon" alt="Weather Icon" id="cityIcon" />
+                <h5 class="city" id="cityName">City Name</h5>
+              </div>
+              <div class="forecast-labels">
+                <p>Temperature:</p>
+                <p>Wind Speed:</p>
+                <p>Humidty:</p>
+                <p>UV Index:</p>
+              </div>
+              <div class="city-forecast" id="citySpecifics">
+                <p id="temperature">Temperature</p>
+                <p id="windseed">Wind Speed</p>
+                <p id="humidity">Humidty</p>
+                <p id="uvIndex">UV Index</p>
+              </div>
+
+              <div class="unitsCurrent">
+                <p>°F</p>
+                <p>mph</p>
+                <p>%</p>
+              </div>
+            </div>
+          </div>
+      
+        <!-- 5-DAY FORECAST -->
+        <div class="five-days custom-forecast" >
+          <div class="title-forecast">5 day forecast:</div>
+          <div class="card">
+            <div class="different-day">
+              <img class="weather-icon" alt="Weather Icon" id="icon-one" />
+              <h5 class="card-title" id="dayUno">Day 1</h5>
+              <div class="col-centered scales">
+                <div class="values">
+                  <p class="temp" id="tempUno"></p>
+                  <p class="wind" id="windUno"></p>
+                  <p class="humid" id="humidUno"></p>
+                </div>
+                <div class="unitsDay">
+                  <p>°F</p>
+                  <p>mph</p>
+                  <p>%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="col-centered day">
+              <img class="weather-icon" alt="Weather Icon" id="icon-two" />
+              <h5 class="card-title" id="dayDos">Day 2</h5>
+              <div class="col-centered scales">
+                <div class="values">
+                  <p class="temp" id="tempDos"></p>
+                  <p class="wind" id="windDos"></p>
+                  <p class="humid" id="humidDos"></p>
+                </div>
+                <div class="unitsDay">
+                  <p>°F</p>
+                  <p>mph</p>
+                  <p>%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="col-centered day">
+              <img class="weather-icon" alt="Weather Icon" id="icon-three" />
+              <h5 class="card-title" id="dayTres">Day 3</h5>
+              <div class="col-centered scales">
+                <div class="values">
+                  <p class="temp" id="tempTres"></p>
+                  <p class="wind" id="windTres"></p>
+                  <p class="humid" id="humidTres"></p>
+                </div>
+                <div class="unitsDay">
+                  <p>°F</p>
+                  <p>mph</p>
+                  <p>%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="col-centered day">
+              <img class="weather-icon" alt="Weather Icon" id="icon-four" />
+              <h5 class="card-title" id="dayCuatro">Day 4</h5>
+              <div class="col-centered scales">
+                <div class="values">
+                  <p class="temp" id="tempCuatro"></p>
+                  <p class="wind" id="windCuatro"></p>
+                  <p class="humid" id="humidCuatro"></p>
+                </div>
+                <div class="unitsDay">
+                  <p>°F</p>
+                  <p>mph</p>
+                  <p>%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="col-centered day">
+              <img class="weather-icon" alt="Weather Icon" id="icon-five" />
+              <h5 class="card-title" id="dayCinco">Day 5</h5>
+              <div class="col-centered scales">
+                <div class="values">
+                  <p class="temp" id="tempCinco"></p>
+                  <p class="wind" id="windCinco"></p>
+                  <p class="humid" id="humidCinco"></p>
+                </div>
+                <div class="unitsDay">
+                  <p>°F</p>
+                  <p>mph</p>
+                  <p>%</p>
+                </div>
+              </div>
+            </div>
+          </div>
     </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/script.js"></script>
-  </body>
+</body>
+
 </html>
