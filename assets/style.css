@@ -55,7 +55,7 @@
 }
 /* 5-DAY FORECAST */
 .title-forecast {
-  position: absolute;
+  position: relative;
 }
 .custom-forecast {
   background-color: lightblue;
