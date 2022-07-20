@@ -1,63 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
 
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <!-- ADD GOOGLE FONTS APIs -->
-    <link
-      rel="stylesheet"
-      href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
-    />
-    <link rel="stylesheet" href="./assets/style.css" />
-    <title>Weather Dashboard App</title>
-  </head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-  <body>
-    <!-- DASHBOARD -->
-    <div class="jumbotron jumbotron-fluid">
-      <div class="col-12 text-center custom-banner">
-        <h1 class="weather-header">Weather Dashboard</h1>
+  <!-- ADD GOOGLE FONTS APIs -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <link rel="stylesheet" href="./assets/style.css" />
+  <title>Weather Dashboard App</title>
+</head>
+
+
+<!-- DASHBOARD -->
+<div class="jumbotron jumbotron-fluid">
+  <div class="col-12 text-center custom-banner">
+    <h1 class="weather-header">Weather Dashboard</h1>
+  </div>
+</div>
+
+<section class="container-fluid row main-container">
+  <!-- LEFT-SIDE SEARCH BAR -->
+  <div class="left-side-bar col-12 col-md-3 ">
+    <div class="mb-3 custom-form" style="height: 90vh">
+      <h3 class="display-5">Search for a City:</h3>
+      <input type="text" class="citySearch" id="searchInput" placeholder="Virginia" />
+      <button class="searchBtn btn-primary" id="search-btn">Search</button>
+    </div>
+    <ul class="searched-city btn-group-vertical" id="searched-city"></ul>
+  </div>
+  </div>
+
+  <!-- CURRENT WEATHER INFO FOR SEARCHED CITY -->
+  <div class="col-md-8 hide" id="current-forecast">
+    <div id="displayCity">
+      <h3>Virginia (7/20/2022)</h3>
+      <img src="" alt="weather icon will be here" />
+      <p>Temperature:</p>
+      <p>Wind Speed:</p>
+      <p>Humidity:</p>
+      <p>UV Index: <span class="index-color"></span></p>
+    </div>
+  </div>
+
+  <div class="5-day-forecast">
+    <h4>5-Day Forecast:</h4>
+    <div id="forecast-five" class="row">
+      <div class="col date">
+        <p>10/20/2021</p>
+        <img src="" alt="Weather Icon">
+        <p>Temperature:</p>
+        <p>Wind Speed:</p>
+        <p>Humidity:</p>
+      </div>
+      <div class="col date">
+        <p>10/21/2021</p>
+        <img src="" alt="Weather Icon">
+        <p>Temperature:</p>
+        <p>Wind Speed:</p>
+        <p>Humidity:</p>
+      </div>
+      <div class="col date">
+        <p>10/22/2021</p>
+        <img src="" alt="Weather Icon">
+        <p>Temperature:</p>
+        <p>Wind Speed:</p>
+        <p>Humidity:</p>
+      </div>
+      <div class="col date">
+        <p>10/23/2021</p>
+        <img src="" alt="Weather Icon">
+        <p>Temperature:</p>
+        <p>Wind Speed:</p>
+        <p>Humidity:</p>
+      </div>
+      <div class="col date">
+        <p>10/23/2021</p>
+        <img src="" alt="Weather Icon">
+        <p>Temperature:</p>
+        <p>Wind Speed:</p>
+        <p>Humidity:</p>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="container col-12">
-      <!-- LEFT-SIDE SEARCH BAR -->
-      <div class="left-side-bar col-3">
-        <div class="mb-3 custom-form" style="height: 90vh">
-          <h3 class="display-5">Search for a City:</h3>
-          <input
-            type="text"
-            class="citySearch"
-            id="searchInput"
-            placeholder="Virginia"
-          />
-          <button class="searchBtn" id="search-btn">Search</button> <br />
-        </div>
-        <ul class="searched-city btn-group-vertical" id="searched-city"></ul>
-      </div>
-
-      <div class="col-8 border border-dark forecast-custom">
+<!-- <div class="col-8 border border-dark forecast-custom">
         <div id="weather-today" class="text-center"></div>
-        <div class="row forecast" style="height: 30vh">
-          5-Day Forecast: <br />
-        </div>
+        <div class="forecast" style="height: 30vh">5-Day Forecast: <br /></div>
       </div>
-    </div>
+    </div> -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="./assets/script.js"></script>
-  </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="./assets/script.js"></script>
+</body>
+
 </html>

@@ -53,14 +53,16 @@ h3 {
 }
 
 /* CURRENT WEATHER */
-.right-side-card {
+.forecast-custom {
   display: flex;
-}
-
-.custom-today {
   background-color: #80037f;
   border-radius: 1rem;
+  color: #fff;
 }
+
+.forecast {
+}
+
 /* 5-DAY FORECAST */
 .title-forecast {
   font-size: 2rem;

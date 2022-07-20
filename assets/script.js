@@ -1,24 +1,31 @@
+//APIs
+const geoRequest = "https://api.openweathermap.org/geo/1.0/direct";
+const weatherRequest = "https://api.openweathermap.org/data/2.5/onecall";
 const APIKey = "4b0c69127490d39234fa02799a1164fe";
+
+//DECLARING VARIABLES
 let citiesArray = []; //data is collected here
 const currentWeather = document.getElementById("weather-today");
 
 //STEP 1: SEARCH CITIES
 const searchedCityEl = document.getElementById("searched-city"); //list of searched cities
 const searchBtn = document.getElementById("search-btn");
+
 clickID = 0; //on click button
 
 // STEP 2: STORE CITIES: Search button functionality + storing cities in local storage
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault;
+  console.log(searchBtn);
   const textInput = document.getElementById("searchInput"); //cityinputEl
-  // citiesArray.push(textInput.value); //push to add elements @ end of array
+
   localStorage.setItem(searchedCityEl, JSON.stringify(citiesArray)); //city input storage location
   displayList();
 });
 
 // Fetching city info from weather api
 function displayList() {
-  const weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
+  let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=Virginia&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
 
   fetch(weatherURL)
     .then(function (res) {
@@ -66,9 +73,24 @@ function displayList() {
 
 searchedCityEl.innerHTML = "";
 const id = clickID;
-clickID++;
+clickID++; //adding one at every click
 
 const textInputEl = $(this).siblings("citySearch").val;
+
+citiesArray.push(textInputEl); //push to add elements @ end of array
+citiesArray.forEach((cityName) => {
+  searchBtn.setAttribute("", cityName); //value?
+  searchBtn.textContent = cityName;
+  searchedCityEl.append(searchBtn);
+});
+
+// localStorage.setItem(id, textInput);
+// var retrievels = localStorage.getItem(id);
+// console.log(retrievels);
+
+// $(this).siblings("textarea").text(retrievels);
+// getAPI();
+
 // console.log(textInputEl);
 
 // PSEUDOCODE
