@@ -1,43 +1,81 @@
 const APIKey = "4b0c69127490d39234fa02799a1164fe";
 let citiesArray = []; //data is collected here
-const currentWeather = document.getElementById("current-weather");
+const currentWeather = document.getElementById("weather-today");
 
 //STEP 1: SEARCH CITIES
-const searchedCity = document.getElementById("searched-city"); //list of searched cities
+const searchedCityEl = document.getElementById("searched-city"); //list of searched cities
 const searchBtn = document.getElementById("search-btn");
 clickID = 0; //on click button
 
-searchBtn.addEventListener("click", function () {
+// STEP 2: STORE CITIES: Search button functionality + storing cities in local storage
+searchBtn.addEventListener("click", function (event) {
+  event.preventDefault;
   const textInput = document.getElementById("searchInput"); //cityinputEl
-  displayList(textInput.value);
-  cityArray.push(textInput.value); //push to add elements @ end of array
-  localStorage.setItem(searchedCity, JSON.stringify(citiesArray)); //city input storage location
+  // citiesArray.push(textInput.value); //push to add elements @ end of array
+  localStorage.setItem(searchedCityEl, JSON.stringify(citiesArray)); //city input storage location
+  displayList();
 });
 
-function displayList(cityInput) {
-  const APIWeather = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial&limit=1`;
-  //api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid={API key}
-  https: console.log(cityInput);
-  console.log(APIWeather);
+// Fetching city info from weather api
+function displayList() {
+  const weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
 
-  fetch(APIWeather)
+  fetch(weatherURL)
     .then(function (res) {
       return res.json();
     })
     .then(function (data) {
       console.log(data);
+
+      //STEP 3: CREATING & DISPLAYING ELEMENTS ON PAGE
+      //div container
+      const divEl = document.createElement("div");
+      divEl.className = "container";
+
+      // City name
+      const title = document.createElement("h1");
+      title.textContent = data.city.name; //retrieving city name
+
+      //Current Day
+      const currentTime = document.createElement("p");
+      currentTime.textContent = moment
+        .unix(data.list[0].dt)
+        .format("MM/DD/YYYY");
+
+      // Current T°
+      const temp = document.createElement("p");
+      temp.textContent = `Temperature: ${data.list[0].main.temp} °F, feels like ${data.list[0].main.feels_like} °F`;
+
+      // Current Humidity
+      const humidity = document.createElement("p");
+      humidity.textContent = `Humidity: ${data.list[0].main.humidity} %`;
+
+      // Wind Speed
+      const windSpeed = document.createElement("p");
+      windSpeed.textContent = `Wind Speed: ${data.list[0].wind.speed} mph`;
+
+      //Icons according to weather
+      const iconID = data.list[0].weather[0].icon;
+      const iconURl = "http://openweathermap.org/img/wn/" + iconID + "@2x.png";
+      const icon = document.createElement("img");
+      icon.setAttribute("src", iconURl);
+      divEl.append(title, currentTime, temp, humidity, windSpeed, icon);
+      currentWeather.append(divEl);
     });
 }
 
-// //STEP 2: STORE CITIES
-// function cityStore() {}
+searchedCityEl.innerHTML = "";
+const id = clickID;
+clickID++;
 
-// dislayCity();
+const textInputEl = $(this).siblings("citySearch").val;
+// console.log(textInputEl);
 
 // PSEUDOCODE
 
-// STEP 1: Display Weather Dashbord at top of viewport
+// STEP 1: Display Weather Dashbord at top of viewport (HTML, Bootstrap, CSS)
 // STEP 2: Left-side bar (FORM) that allows the user to search for a city
+// -- add search button --> event listener (click)
 // STEP 3: Selected city is added to the search history (left-side)
 /* STEP 4: When city is searched, then weather conditions are displayed (CURRENT & 5-DAY FORECAST)
         a) User can see city name, today's date, icon representation of weather conditions, temperature, humidity, wind speed, and UV index

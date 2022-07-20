@@ -10,13 +10,21 @@
 }
 
 /* WEATHER BANNER */
+h3 {
+  color: #fff;
+}
 .custom-banner,
 .jumbotron {
-  background-color: lightblue;
   height: 2rem;
+  background: rgb(139, 0, 120);
+  background: linear-gradient(
+    90deg,
+    rgba(139, 0, 120, 1) 0%,
+    rgba(16, 33, 204, 1) 100%
+  );
 }
 .weather-header {
-  color: darkslategrey;
+  color: #fff;
   text-transform: uppercase;
   font-weight: 600;
   justify-content: center;
@@ -25,7 +33,7 @@
 /* SEARCH CITY LEFT-SIDE BAR */
 .left-side-bar {
   padding: 1rem;
-  background-color: darkcyan;
+  background-color: #1c1ec5;
   border-radius: 1rem;
   display: flex;
 }
@@ -50,38 +58,35 @@
 }
 
 .custom-today {
-  background-color: palevioletred;
+  background-color: #80037f;
   border-radius: 1rem;
 }
 /* 5-DAY FORECAST */
 .title-forecast {
-  position: relative;
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-left: 15px;
 }
 .custom-forecast {
-  background-color: lightblue;
   border: none;
-  padding: 2rem;
+  padding: 0.5rem;
   color: darkslategrey;
   border-radius: 1rem;
-  position: relative;
 }
 
 .card {
   /* width: 20rem; */
-  column-gap: 2rem;
-  /* display: flex; */
-  /* height: 250px;
-  width: 200px; */
+  width: 200px;
+  height: 250px;
+  margin-right: 20px;
+  padding: 1rem;
+  background-color: #5d0d98;
+  color: #fff;
 }
 
 .five-days,
 .scales {
   display: flex;
-}
-
-.card-body {
-  display: flex;
-  justify-content: space-evenly;
 }
 
 .forecast-labels {
