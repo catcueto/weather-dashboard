@@ -1,8 +1,9 @@
 /* GENERAL STYLING */
 * {
   margin: 0 auto;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
+  font-size: 1.2rem;
 }
 
 .container {
@@ -10,9 +11,6 @@
 }
 
 /* WEATHER BANNER */
-h3 {
-  color: #fff;
-}
 .custom-banner,
 .jumbotron {
   height: 2rem;
@@ -31,25 +29,41 @@ h3 {
 }
 
 /* SEARCH CITY LEFT-SIDE BAR */
+.search-for {
+  color: cornflowerblue;
+  margin-bottom: 1.2rem;
+  align-items: flex-start;
+  font-weight: 600;
+}
+
 .left-side-bar {
-  padding: 1rem;
-  background-color: #1c1ec5;
   border-radius: 1rem;
   display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-bottom: 10px;
+  margin: 0;
 }
 
 .searchBtn {
-  background-color: lightblue;
+  display: inline-block;
+  background-color: cornflowerblue;
   border: none;
-  padding: 5px 10px 5px 10px;
-  color: darkslategrey;
-  border-radius: 1rem;
+  padding: 5px 8px 5px 8px;
+  color: #fff;
+  font-weight: 400;
+  border-radius: 0.5rem;
 }
 
 .citySearch {
-  border: none;
+  border-color: rgb(38, 104, 226);
   border-radius: 0.5rem;
-  padding: 5px 10px 5px 10px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.searched-city {
+  position: relative;
 }
 
 /* CURRENT WEATHER */
@@ -58,9 +72,6 @@ h3 {
   background-color: #80037f;
   border-radius: 1rem;
   color: #fff;
-}
-
-.forecast {
 }
 
 /* 5-DAY FORECAST */
@@ -98,4 +109,30 @@ h3 {
 .values,
 .labelDay {
   text-align: left;
+}
+
+/* UV Index Ratings */
+.low,
+.moderate,
+.high,
+.very-high {
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.low {
+  background-color: rgb(8, 170, 8);
+}
+
+.moderate {
+  background-color: rgb(251, 255, 0);
+}
+
+.high {
+  background-color: orangered;
+}
+
+.very-high {
+  background-color: red;
 }

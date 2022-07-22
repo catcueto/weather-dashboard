@@ -10,7 +10,13 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
   <!-- ADD GOOGLE FONTS APIs -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <!-- WEATHER ICONS -->
+  <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/open-weather-icons">
+
   <link rel="stylesheet" href="./assets/style.css" />
   <title>Weather Dashboard App</title>
 </head>
@@ -25,18 +31,15 @@
 
 <section class="container-fluid row main-container">
   <!-- LEFT-SIDE SEARCH BAR -->
-  <div class="left-side-bar col-12 col-md-3 ">
-    <div class="mb-3 custom-form" style="height: 90vh">
-      <h3 class="display-5">Search for a City:</h3>
-      <input type="text" class="citySearch" id="searchInput" placeholder="Virginia" />
-      <button class="searchBtn btn-primary" id="search-btn">Search</button>
-    </div>
+  <div class="left-side-bar col col-12 col-md-3 ">
+    <h3 class="search-for">Search for a City:</h3>
+    <input type="text" class="citySearch" id="cityInput" placeholder="Virginia" />
+    <button class="searchBtn btn-primary" id="search-btn">Search</button>
     <ul class="searched-city btn-group-vertical" id="searched-city"></ul>
-  </div>
   </div>
 
   <!-- CURRENT WEATHER INFO FOR SEARCHED CITY -->
-  <div class="col-md-8 hide" id="current-forecast">
+  <div class="col-md-8 hideEl" id="current-weather">
     <div id="displayCity">
       <h3>Virginia (7/20/2022)</h3>
       <img src="" alt="weather icon will be here" />
@@ -89,11 +92,7 @@
   </div>
 </section>
 
-<!-- <div class="col-8 border border-dark forecast-custom">
-        <div id="weather-today" class="text-center"></div>
-        <div class="forecast" style="height: 30vh">5-Day Forecast: <br /></div>
-      </div>
-    </div> -->
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

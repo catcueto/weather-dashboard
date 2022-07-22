@@ -1,88 +1,136 @@
+//STEP 1: DECLARING VARIABLES
+// https://api.openweathermap.org/data/3.0/onecall?lat=39.7990175&lon=-89.6439575&exclude=minute,hourly&appid=4b0c69127490d39234fa02799a1164fe
 //APIs
 const geoRequest = "https://api.openweathermap.org/geo/1.0/direct";
-const weatherRequest = "https://api.openweathermap.org/data/2.5/onecall";
+const weatherRequest =
+  "https://api.openweathermap.org/data/2.5/onecall?exclude=minutely,hourly";
 const APIKey = "4b0c69127490d39234fa02799a1164fe";
 
-//DECLARING VARIABLES
 let citiesArray = []; //data is collected here
-const currentWeather = document.getElementById("weather-today");
+const searchBtn = $("#search-btn"); //main button
+const cityInputEl = $("#cityInput"); //user's search
+const searchedCityEl = $("#searched-city"); //list of searched cities
+const displayCityEl = $("#displayCity"); //displaying searched cities
+const currentWeatherEl = $("#current-weather");
+const forecastEl = $("#forecast-five");
 
-//STEP 1: SEARCH CITIES
-const searchedCityEl = document.getElementById("searched-city"); //list of searched cities
-const searchBtn = document.getElementById("search-btn");
-
-clickID = 0; //on click button
-
-// STEP 2: STORE CITIES: Search button functionality + storing cities in local storage
-searchBtn.addEventListener("click", function (event) {
+// STEP 2: ADDING FUNCTIONALITY TO SEARCH-BTN
+//Button works when clicked, and if no input is entered, display an error message
+searchBtn.on("click", function (event) {
   event.preventDefault;
-  console.log(searchBtn);
-  const textInput = document.getElementById("searchInput"); //cityinputEl
-
-  localStorage.setItem(searchedCityEl, JSON.stringify(citiesArray)); //city input storage location
-  displayList();
+  let cityName = cityInputEl.val();
+  if (cityName === "") {
+    cityInputEl.attr("placeholder", "Please enter a city");
+    return; //stops code from keep running
+  }
+  console.log(cityName);
+  getWeatherByName(cityName);
 });
 
-// Fetching city info from weather api
-function displayList() {
-  let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?q=Virginia&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
+// STEP 3: FUNCITONALITY FOR PREVIOUSLY SEARCHED CITIES (BUTONS)
+searchedCityEl.on("click", ".searchBtn", btnClick);
 
+function starter() {
+  //pulling local storage array, else assign variable to an empty array
+  const searchHistory =
+    JSON.parse(localStorage.getItem("priorSearch")) || citiesArray; //citiesArray is an empty array
+  for (let i = 0; i < searchHistory.length; i++) {
+    //adding a button for every element
+    searchedCityEl.append(
+      '<button class="btn bg-light-gray">' + searchHistory[i] + "</button>"
+    );
+  }
+}
+
+starter(); //initializes the app with values in localStorage
+
+function btnClick(event) {
+  event.preventDefault();
+  webRequest($(this).text()); // sending a web request based on the button's text
+}
+
+// STEP 4: FETCHING COORDINATES INFO FROM API
+function getWeatherByName(cityName) {
+  const geoURL = `${geoRequest}?q=${cityName}&appid=${APIKey}`;
+
+  fetch(geoURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      console.log(data[0].lat, data[0].lon);
+      getWeatherByCoordinates(data[0].lat, data[0].lon);
+      let today = moment().format("M/D/YYYY"); // using moment to get current date
+      // If user doesn't input any state
+      let stateCountry = data[0].state;
+      //then display country
+      if (stateCountry === undefined) stateCountry = data[0].country;
+
+      displayCityEl
+        .find("h3") //h3 refers to the city Name on HTML file
+        .text(data[0].name + ", " + stateCountry + " " + today);
+      getWeatherByCoordinates(data);
+    });
+}
+
+function getWeatherByCoordinates(lat, lon) {
+  let weatherURL = `${weatherRequest}&lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
   fetch(weatherURL)
     .then(function (res) {
       return res.json();
     })
     .then(function (data) {
       console.log(data);
-
-      //STEP 3: CREATING & DISPLAYING ELEMENTS ON PAGE
-      //div container
-      const divEl = document.createElement("div");
-      divEl.className = "container";
-
-      // City name
-      const title = document.createElement("h1");
-      title.textContent = data.city.name; //retrieving city name
-
-      //Current Day
-      const currentTime = document.createElement("p");
-      currentTime.textContent = moment
-        .unix(data.list[0].dt)
-        .format("MM/DD/YYYY");
-
-      // Current T°
-      const temp = document.createElement("p");
-      temp.textContent = `Temperature: ${data.list[0].main.temp} °F, feels like ${data.list[0].main.feels_like} °F`;
-
-      // Current Humidity
-      const humidity = document.createElement("p");
-      humidity.textContent = `Humidity: ${data.list[0].main.humidity} %`;
-
-      // Wind Speed
-      const windSpeed = document.createElement("p");
-      windSpeed.textContent = `Wind Speed: ${data.list[0].wind.speed} mph`;
-
-      //Icons according to weather
-      const iconID = data.list[0].weather[0].icon;
-      const iconURl = "http://openweathermap.org/img/wn/" + iconID + "@2x.png";
-      const icon = document.createElement("img");
-      icon.setAttribute("src", iconURl);
-      divEl.append(title, currentTime, temp, humidity, windSpeed, icon);
-      currentWeather.append(divEl);
+      //Adding Weather Icon next to the city's name and today's date
+      let weatherIcon = data.current.weather[0].icon;
+      displayCityEl
+        .children()
+        .eq(1)
+        .attr(
+          "src",
+          "http://openweathermap.org/img/wn/" + weatherIcon + ".png"
+        );
+      // eq(index) reduces set of matched elements to the specified index
+      // using console to pull data for each element
+      displayCityEl.children().eq(1).attr("alt", data.current.weather[0].main);
+      displayCityEl
+        .children()
+        .eq(2)
+        .text("Temperature: " + data.current.temp + "°F"); //
+      displayCityEl
+        .children()
+        .eq(3)
+        .text("Wind Speed: " + data.current.wind_speed + " MPH");
+      displayCityEl
+        .children()
+        .eq(4)
+        .text("Humidity: " + data.current.humidity + "%");
+      indexUV(data.current.uvi); // sets the background color of the UV index
+      displayCityEl.children().eq(5).children().text(data.current.uvi); // current UV index
+      // forecast5Days(data); // calls 5-day forecast
+      currentWeatherEl.remove("hideEl"); // allows the user display to be seen
     });
 }
 
-searchedCityEl.innerHTML = "";
-const id = clickID;
-clickID++; //adding one at every click
-
-const textInputEl = $(this).siblings("citySearch").val;
-
-citiesArray.push(textInputEl); //push to add elements @ end of array
-citiesArray.forEach((cityName) => {
-  searchBtn.setAttribute("", cityName); //value?
-  searchBtn.textContent = cityName;
-  searchedCityEl.append(searchBtn);
-});
+function indexUV(scale) {
+  // We first want to get rid of any prexisting coloring for the UV index levels
+  let index = displayCityEl.children().eq(4).children();
+  index.removeClass("low");
+  index.removeClass("moderate");
+  index.removeClass("high");
+  index.remove("very-high");
+  // Then we want to add desired color to each UV index based on the scale
+  if (scale <= 2) {
+    index.addClass("low");
+  } else if (scale <= 3) {
+    index.addClass("moderate");
+  } else if (scale <= 7) {
+    index.addClass("high");
+  } else {
+    index.addClass("very-high");
+  }
+}
 
 // localStorage.setItem(id, textInput);
 // var retrievels = localStorage.getItem(id);
