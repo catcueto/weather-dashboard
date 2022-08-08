@@ -1,17 +1,17 @@
-// TODO: STEP 1: DECLARING VARIABLES
+// TODO - STEP 1: DECLARING VARIABLES
 const APIKey = "bb7304f084ceb5e9b27c6996241d67e5";
 
 let citiesArray = []; //data is collected here
 const searchBtn = $("#search-btn"); //main button
 const cityInputEl = $("#cityInput"); //user's search
-const searchedCityEl = $("#searched-city"); //list of searched cities
+const previousSearchesEl = $("#previous-searches"); //list of searched cities
 const displayCityEl = $("#displayCity"); //displaying searched cities
 const currentWeatherEl = $("#current-weather");
 const forecastEl = $("#forecast-five");
 
 init(); //initializes the app with values in localStorage
 
-// TODO: STEP 2: ADDING FUNCTIONALITY TO SEARCH-BTN
+// TODO - STEP 2: ADDING FUNCTIONALITY TO SEARCH-BTN
 // Button works when clicked, and if no input is entered, display an error message
 searchBtn.on("click", function (event) {
   event.preventDefault;
@@ -31,90 +31,106 @@ searchBtn.on("click", function (event) {
   cityInputEl.val("");
 });
 
-// STEP 2: STORE SEARCHED CITIES
-function storeCities() {
-  citiesArray.push(cityInputEl.val);
-  localStorage.setItem("searched-city", JSON.stringify(citiesArray));
-  displayCurrent(cityInputEl.val);
-  displaySearchedCities();
-  displayForecast(data);
-}
+// TODO - STEP 3: MAKE PREVIOUS SEARCHES BTN CLICKABLE
+previousSearchesEl.on("click", ".btn", btnClick);
 
-// STEP 3: DISPLAY PREVIOUSLY SEARCHED CITIES ON PAGE
-function displaySearchedCities() {
-  searchedCityEl.innerHTML = "";
-  if (localStorage.getItem("searched-city")) {
-    for (let i = 0; i < citiesArray.length; i++) {
-      let cityEl = document.createElement("li");
-      cityEl.textContent = citiesArray[i];
-      searchedCityEl.appendChild(cityEl);
-    }
+// // STEP 2: STORE SEARCHED CITIES
+// function storeCities() {
+//   citiesArray.push(cityInputEl.val);
+//   localStorage.setItem("searched-city", JSON.stringify(citiesArray));
+//   displayCurrent(cityInputEl.val);
+//   displaySearchedCities();
+//   displayForecast(data);
+// }
+
+// TODO - STEP 4: ADD PREVIOUS SEARCHES TO LOCAL STORAGE so users can revisit them as needed
+function init() {
+  // grab local storage array, else --> assign variable to an empty array
+  let localSto = JSON.parse(localStorage.getItem("priorSearch")) || citiesArray;
+  console.log(localSto);
+  for (let i = 0; i < localSto.length; i++) {
+    // appending a new btn for every index in localSto
+    previousSearchesEl.append(
+      '<button class="btn bg-light-gray">' + localSto[i] + "</button>"
+    );
   }
 }
-displaySearchedCities();
 
-// STEP 4: DISPLAY CURRENT WEATHER INFO
-function displayCurrent(cityInput) {
-  const todayURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
-  fetch(todayURL)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data);
+// // STEP 4: DISPLAY PREVIOUSLY SEARCHED CITIES ON PAGE
+// function displaySearchedCities() {
+//   searchedCityEl.innerHTML = "";
+//   if (localStorage.getItem("searched-city")) {
+//     for (let i = 0; i < citiesArray.length; i++) {
+//       let cityEl = document.createElement("li");
+//       cityEl.textContent = citiesArray[i];
+//       searchedCityEl.appendChild(cityEl);
+//     }
+//   }
+// }
+// displaySearchedCities();
 
-      document.getElementById("cityName").innerHTML = data.city.name;
-      document.getElementById("current-date").innerHTML = moment
-        .unix(data.list[0].dt)
-        .format("MM/DD/YYYY");
-      document.getElementById("temp-today").innerHTML = data.list[0].main.temp;
-      document.getElementById("wind-today").innerHTML = data.list[0].wind.speed;
-      document.getElementById("humid-today").innerHTML =
-        data.list[0].main.humidity;
-      let weatherIconId = data.list[0].weather[0].icon; //icon current day
-      let iconURL =
-        "http://openweathermap.org/img/wn/" + weatherIconId + "@2x.png";
-      document.getElementById("cityIcon").setAttribute("src", iconURL);
+// // STEP 4: DISPLAY CURRENT WEATHER INFO
+// function displayCurrent(cityInput) {
+//   const todayURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
+//   fetch(todayURL)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       console.log(data);
 
-      // STEP 5: DISPLAY 5-DAY FORECAST
-      function displayForecast(data) {
-        //loops through the data to display a 5-day forecast
-        for (let i = 0; i < 5; i++) {
-          let day = forecast.children().eq(i); // moves through the different divs
-          let iconDaily = data.daily[i].weather[0].icon; // gets the icon of the indexed day
-          day
-            .children()
-            .eq(0)
-            .text(
-              moment()
-                .add(i + 1, "days")
-                .format("M/D/YYYY")
-            ); // date of the respective index
-          day
-            .children()
-            .eq(1)
-            .attr(
-              "src",
-              "http://openweathermap.org/img/wn/" + iconDaily + ".png"
-            ); //icon for the indexed day
-          // day.children().eq(1).attr('alt',data.daily[i].weather[0].main); //sets the alt text of the icon to be more descriptive
-          day
-            .children()
-            .eq(2)
-            .text("Temperature: " + data.daily[i].temp.day + "°F"); //temperature
-          day
-            .children()
-            .eq(3)
-            .text("Wind Speed: " + data.daily[i].wind_speed + " MPH"); //wind speed
-          day
-            .children()
-            .eq(4)
-            .text("Humidity: " + data.daily[i].humidity + "%"); // humidity
-        }
-      }
-    });
-}
-displayCurrent();
+//       document.getElementById("cityName").innerHTML = data.city.name;
+//       document.getElementById("current-date").innerHTML = moment
+//         .unix(data.list[0].dt)
+//         .format("MM/DD/YYYY");
+//       document.getElementById("temp-today").innerHTML = data.list[0].main.temp;
+//       document.getElementById("wind-today").innerHTML = data.list[0].wind.speed;
+//       document.getElementById("humid-today").innerHTML =
+//         data.list[0].main.humidity;
+//       let weatherIconId = data.list[0].weather[0].icon; //icon current day
+//       let iconURL =
+//         "http://openweathermap.org/img/wn/" + weatherIconId + "@2x.png";
+//       document.getElementById("cityIcon").setAttribute("src", iconURL);
+
+//       // STEP 5: DISPLAY 5-DAY FORECAST
+//       function displayForecast(data) {
+//         //loops through the data to display a 5-day forecast
+//         for (let i = 0; i < 5; i++) {
+//           let day = forecast.children().eq(i); // moves through the different divs
+//           let iconDaily = data.daily[i].weather[0].icon; // gets the icon of the indexed day
+//           day
+//             .children()
+//             .eq(0)
+//             .text(
+//               moment()
+//                 .add(i + 1, "days")
+//                 .format("M/D/YYYY")
+//             ); // date of the respective index
+//           day
+//             .children()
+//             .eq(1)
+//             .attr(
+//               "src",
+//               "http://openweathermap.org/img/wn/" + iconDaily + ".png"
+//             ); //icon for the indexed day
+//           // day.children().eq(1).attr('alt',data.daily[i].weather[0].main); //sets the alt text of the icon to be more descriptive
+//           day
+//             .children()
+//             .eq(2)
+//             .text("Temperature: " + data.daily[i].temp.day + "°F"); //temperature
+//           day
+//             .children()
+//             .eq(3)
+//             .text("Wind Speed: " + data.daily[i].wind_speed + " MPH"); //wind speed
+//           day
+//             .children()
+//             .eq(4)
+//             .text("Humidity: " + data.daily[i].humidity + "%"); // humidity
+//         }
+//       }
+//     });
+// }
+// displayCurrent();
 
 // STEP 3: FUNCITONALITY FOR PREVIOUSLY SEARCHED CITIES (BUTONS)
 // searchedCityEl.on("click", ".searchBtn", btnClick);
