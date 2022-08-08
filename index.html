@@ -13,7 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+
   <!-- WEATHER ICONS -->
   <link rel="stylesheet" href="https://www.jsdelivr.com/package/npm/open-weather-icons">
 
@@ -29,7 +31,8 @@
   </div>
 </div>
 
-<section class="container-fluid row main-container">
+<section class="container"> 
+  <div class= "container-fluid row main-container">
   <!-- LEFT-SIDE SEARCH BAR -->
   <div class="left-side-bar col col-12 col-md-3 ">
     <h3 class="search-for">Search for a City:</h3>
@@ -41,12 +44,13 @@
   <!-- CURRENT WEATHER INFO FOR SEARCHED CITY -->
   <div class="col-md-8 hideEl" id="current-weather">
     <div id="displayCity">
-      <h3>Virginia (7/20/2022)</h3>
-      <img src="" alt="weather icon will be here" />
-      <p>Temperature:</p>
-      <p>Wind Speed:</p>
-      <p>Humidity:</p>
-      <p>UV Index: <span class="index-color"></span></p>
+      <div class="date" id="current-date"></div>
+      <h3 class=city id=cityName>Virginia </h3>
+      <img src="" alt="weather icon will be here" id="city-icon" />
+      <p id='temp-today'>Temperature:</p>
+      <p id='wind-today'>Wind Speed:</p>
+      <p id='humid-today'>Humidity:</p>
+      <p id='uvIndex'>UV Index: <span class="index-color"></span></p>
     </div>
   </div>
 
@@ -56,37 +60,46 @@
       <div class="col date">
         <p>10/20/2021</p>
         <img src="" alt="Weather Icon">
-        <p>Temperature:</p>
-        <p>Wind Speed:</p>
-        <p>Humidity:</p>
+        <p id='temp-five'>Temperature:</p>
+        <p id='wind-five'>Wind Speed:</p>
+        <p id='humid-fiv'>Humidity:</p>
+        <p id='uv-five'>UV Index: </p>
       </div>
       <div class="col date">
-        <p>10/21/2021</p>
+        <p>10/20/2021</p>
         <img src="" alt="Weather Icon">
-        <p>Temperature:</p>
-        <p>Wind Speed:</p>
-        <p>Humidity:</p>
+        <p id='temp-five'>Temperature:</p>
+        <p id='wind-five'>Wind Speed:</p>
+        <p id='humid-fiv'>Humidity:</p>
+        <p id='uv-five'>UV Index: </p>
+
       </div>
       <div class="col date">
         <p>10/22/2021</p>
         <img src="" alt="Weather Icon">
-        <p>Temperature:</p>
-        <p>Wind Speed:</p>
-        <p>Humidity:</p>
+        <p id='temp-five'>Temperature:</p>
+        <p id='wind-five'>Wind Speed:</p>
+        <p id='humid-fiv'>Humidity:</p>
+        <p id='uv-five'>UV Index: </p>
       </div>
+
       <div class="col date">
-        <p>10/23/2021</p>
+        <p>10/20/2021</p>
         <img src="" alt="Weather Icon">
-        <p>Temperature:</p>
-        <p>Wind Speed:</p>
-        <p>Humidity:</p>
+        <p id='temp-five'>Temperature:</p>
+        <p id='wind-five'>Wind Speed:</p>
+        <p id='humid-fiv'>Humidity:</p>
+        <p id='uv-five'>UV Index: </p>
       </div>
+
       <div class="col date">
-        <p>10/23/2021</p>
+        <p>10/20/2021</p>
         <img src="" alt="Weather Icon">
-        <p>Temperature:</p>
-        <p>Wind Speed:</p>
-        <p>Humidity:</p>
+        <p id='temp-five'>Temperature:</p>
+        <p id='wind-five'>Wind Speed:</p>
+        <p id='humid-fiv'>Humidity:</p>
+        <p id='uv-five'>UV Index: </p>
+        </div>
       </div>
     </div>
   </div>
@@ -100,3 +113,4 @@
 </body>
 
 </html>
+
