@@ -1,5 +1,5 @@
-//STEP 1: DECLARING VARIABLES
-const APIKey = "4b0c69127490d39234fa02799a1164fe";
+// TODO: STEP 1: DECLARING VARIABLES
+const APIKey = "bb7304f084ceb5e9b27c6996241d67e5";
 
 let citiesArray = []; //data is collected here
 const searchBtn = $("#search-btn"); //main button
@@ -9,7 +9,27 @@ const displayCityEl = $("#displayCity"); //displaying searched cities
 const currentWeatherEl = $("#current-weather");
 const forecastEl = $("#forecast-five");
 
-// init(); //initializes the app with values in localStorage
+init(); //initializes the app with values in localStorage
+
+// TODO: STEP 2: ADDING FUNCTIONALITY TO SEARCH-BTN
+// Button works when clicked, and if no input is entered, display an error message
+searchBtn.on("click", function (event) {
+  event.preventDefault;
+  // if user doesn't enter any city name
+  if (cityInputEl === "") {
+    cityInputEl.attr("placeholder", "Please enter a city");
+    return; //stops code from keep running
+  }
+
+  // Let's be fancy and format the string so that the first letter of the city searched is uppercase, while the rest is lowecase
+  let str = formatInput(cityInputEl.val());
+  // Adding a new btn that holds value of newly searched city
+  appendNewButton(str);
+  //sending a request for geo location
+  webRequest(cityInputEl.val());
+  // Clearing value from the city input area
+  cityInputEl.val("");
+});
 
 // STEP 2: STORE SEARCHED CITIES
 function storeCities() {
@@ -95,19 +115,6 @@ function displayCurrent(cityInput) {
     });
 }
 displayCurrent();
-
-// STEP 4: ADDING FUNCTIONALITY TO SEARCH-BTN
-//Button works when clicked, and if no input is entered, display an error message
-searchBtn.on("click", function (event) {
-  event.preventDefault;
-  let cityNameEl = cityInputEl.val();
-  if (cityNameEl === "") {
-    cityInputEl.attr("placeholder", "Please enter a city");
-    return; //stops code from keep running
-  }
-  console.log(cityName);
-  // getWeatherByName(cityName);
-});
 
 // STEP 3: FUNCITONALITY FOR PREVIOUSLY SEARCHED CITIES (BUTONS)
 // searchedCityEl.on("click", ".searchBtn", btnClick);
