@@ -10,7 +10,7 @@ const searchBtn = $("#search-btn"); //main button
 const cityInputEl = $("#cityInput"); //user's search
 const previousSearchesEl = $("#previous-searches"); //list of searched cities
 const displayCityEl = $("#displayCity"); //displaying searched cities
-const currentWeatherEl = $("#current-weather");
+const currentWeatherEl = $("#current-weather"); //display current weather
 const forecastEl = $("#forecast-five");
 
 init(); //initializes the app with values in localStorage
@@ -57,9 +57,9 @@ function btnClick(event) {
   webRequest($(this).text());
 }
 
-// TODO: FETCHING TO DISPLAY WEATHER INFO
+// TODO - STEP 5: FETCHING: Getting latitude and longitude coordinates for inputted city
 function webRequest(cityName) {
-  const geoRequestURL = geoRequest + "?q=" + cityName + "&appid=" + APIKey;
+  let geoRequestURL = geoRequest + "?q=" + cityName + "&appid=" + APIKey;
   // getting the latitute and longitude of the city the user searches
   fetch(geoRequestURL)
     .then(function (response) {
@@ -77,89 +77,80 @@ function webRequest(cityName) {
     });
 }
 
-// // STEP 2: STORE SEARCHED CITIES
-// function storeCities() {
-//   citiesArray.push(cityInputEl.val);
-//   localStorage.setItem("searched-city", JSON.stringify(citiesArray));
-//   displayCurrent(cityInputEl.val);
-//   displaySearchedCities();
-//   displayForecast(data);
-// }
-// // STEP 4: DISPLAY PREVIOUSLY SEARCHED CITIES ON PAGE
-// function displaySearchedCities() {
-//   searchedCityEl.innerHTML = "";
-//   if (localStorage.getItem("searched-city")) {
-//     for (let i = 0; i < citiesArray.length; i++) {
-//       let cityEl = document.createElement("li");
-//       cityEl.textContent = citiesArray[i];
-//       searchedCityEl.appendChild(cityEl);
-//     }
-//   }
-// }
-// displaySearchedCities();
+// TODO - STEP 6: GET WEATHER INFO FOR SEARCHED CITY
+function getWeather(geoCoordinates) {
+  // Using latitude and longitude to find city
+  let weatherRequestURL =
+    weatherRequest +
+    "?lat=" +
+    geoCoordinates[0].lat +
+    "&lon=" +
+    geoCoordinates[0].lon +
+    "&units=imperial&appid=" +
+    APIKey;
+  fetch(weatherRequestURL)
+    .then(function (response) {
+      //sends a request for weather using the received lat and lon
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      // display weather icon next to cityName and today's date
+      let icon = data.current.weather[0].icon;
+      displayCityEl
+        .children()
+        .eq(1)
+        .attr("src", "http://openweathermap.org/img/wn/" + icon + ".png");
+      // DISPLAYING CURRENT WEATHER
+      displayCityEl.children().eq(1).attr("alt", data.current.weather[0].main);
 
-// STEP 4: DISPLAY CURRENT WEATHER INFO
-// function displayCurrent(cityInput) {
-//   const todayURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
-//   fetch(todayURL)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       console.log(data);
+      displayCityEl
+        .children()
+        .eq(2)
+        // this will display today's T°
+        .text("Temp: " + data.current.temp + "°F");
 
-//       document.getElementById("cityName").innerHTML = data.city.name;
-//       document.getElementById("current-date").innerHTML = moment
-//         .unix(data.list[0].dt)
-//         .format("MM/DD/YYYY");
-//       document.getElementById("temp-today").innerHTML = data.list[0].main.temp;
-//       document.getElementById("wind-today").innerHTML = data.list[0].wind.speed;
-//       document.getElementById("humid-today").innerHTML =
-//         data.list[0].main.humidity;
-//       let weatherIconId = data.list[0].weather[0].icon; //icon current day
-//       let iconURL =
-//         "http://openweathermap.org/img/wn/" + weatherIconId + "@2x.png";
-//       document.getElementById("cityIcon").setAttribute("src", iconURL);
+      displayCityEl
+        .children()
+        .eq(3)
+        // this will display today's wind speed
+        .text("Wind: " + data.current.wind_speed + " MPH");
 
-//       // STEP 5: DISPLAY 5-DAY FORECAST
-//       function displayForecast(data) {
-//         //loops through the data to display a 5-day forecast
-//         for (let i = 0; i < 5; i++) {
-//           let day = forecast.children().eq(i); // moves through the different divs
-//           let iconDaily = data.daily[i].weather[0].icon; // gets the icon of the indexed day
-//           day
-//             .children()
-//             .eq(0)
-//             .text(
-//               moment()
-//                 .add(i + 1, "days")
-//                 .format("M/D/YYYY")
-//             ); // date of the respective index
-//           day
-//             .children()
-//             .eq(1)
-//             .attr(
-//               "src",
-//               "http://openweathermap.org/img/wn/" + iconDaily + ".png"
-//             ); //icon for the indexed day
-//           // day.children().eq(1).attr('alt',data.daily[i].weather[0].main); //sets the alt text of the icon to be more descriptive
-//           day
-//             .children()
-//             .eq(2)
-//             .text("Temperature: " + data.daily[i].temp.day + "°F"); //temperature
-//           day
-//             .children()
-//             .eq(3)
-//             .text("Wind Speed: " + data.daily[i].wind_speed + " MPH"); //wind speed
-//           day
-//             .children()
-//             .eq(4)
-//             .text("Humidity: " + data.daily[i].humidity + "%"); // humidity
-//         }
-//       }
-//     });
-// }
-// displayCurrent();
+      displayCityEl
+        .children()
+        .eq(4)
+        // this will display today's humidty
+        .text("Humidity: " + data.current.humidity + "%");
+
+      // TODO - STEP 7: SET UV INDEX BACKGROUND COLOR ACCORDINGLY
+      indexScale(data.current.uvi);
+      // this will display today's UV-index
+      displayCityEl.children().eq(5).children().text(data.current.uvi);
+      // Populates 5-day forecast
+      renderForecast(data);
+      // We remove CSS hide class, so it can be displayed on the screen
+      currentWeatherEl.removeClass("hide");
+    });
+}
+
+function indexScale(rating) {
+  let indexColor = displayCityEl.children().eq(4).children();
+  // //removes any of the coloring that the index would have had
+  // indexColor.removeClass("minimal");
+  // indexColor.removeClass("low");
+  // indexColor.removeClass("moderate");
+  // indexColor.removeClass("high");
+  // Adding correct color based on uv index rating
+  if (rating < 2) {
+    indexColor.addClass("low");
+  } else if (3 < rating < 5) {
+    indexColor.addClass("moderate");
+  } else if (6 < rating < 7) {
+    indexColor.addClass("high");
+  } else {
+    indexColor.addClass("very-high");
+  }
+}
 
 // STEP 3: FUNCITONALITY FOR PREVIOUSLY SEARCHED CITIES (BUTONS)
 // searchedCityEl.on("click", ".searchBtn", btnClick);
