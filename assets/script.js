@@ -1,6 +1,10 @@
 // TODO - STEP 1: DECLARING VARIABLES
+// API info: api key, geo request, and weather request
 const APIKey = "bb7304f084ceb5e9b27c6996241d67e5";
+const geocodingRequest = "https://api.openweathermap.org/geo/1.0/direct";
+const weatherRequest = "https://api.openweathermap.org/data/2.5/onecall";
 
+// Page Elements
 let citiesArray = []; //data is collected here
 const searchBtn = $("#search-btn"); //main button
 const cityInputEl = $("#cityInput"); //user's search
@@ -34,15 +38,6 @@ searchBtn.on("click", function (event) {
 // TODO - STEP 3: MAKE PREVIOUS SEARCHES BTN CLICKABLE
 previousSearchesEl.on("click", ".btn", btnClick);
 
-// // STEP 2: STORE SEARCHED CITIES
-// function storeCities() {
-//   citiesArray.push(cityInputEl.val);
-//   localStorage.setItem("searched-city", JSON.stringify(citiesArray));
-//   displayCurrent(cityInputEl.val);
-//   displaySearchedCities();
-//   displayForecast(data);
-// }
-
 // TODO - STEP 4: ADD PREVIOUS SEARCHES TO LOCAL STORAGE so users can revisit them as needed
 function init() {
   // grab local storage array, else --> assign variable to an empty array
@@ -56,6 +51,40 @@ function init() {
   }
 }
 
+function btnClick(event) {
+  event.preventDefault();
+  // sending web request accordingly to button's text
+  webRequest($(this).text());
+}
+
+// TODO: FETCHING TO DISPLAY WEATHER INFO
+function webRequest(cityName) {
+  const geoRequestURL = geoRequest + "?q=" + cityName + "&appid=" + APIKey;
+  // getting the latitute and longitude of the city the user searches
+  fetch(geoRequestURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      console.log(data[0].lat, data[0].lon);
+      // Getting today's date
+      let today = moment().format("M/D/YYYY");
+      displayCityEl
+        .find("h3")
+        .text(data[0].name + ", " + container + " (" + today + ")");
+      getWeather(data);
+    });
+}
+
+// // STEP 2: STORE SEARCHED CITIES
+// function storeCities() {
+//   citiesArray.push(cityInputEl.val);
+//   localStorage.setItem("searched-city", JSON.stringify(citiesArray));
+//   displayCurrent(cityInputEl.val);
+//   displaySearchedCities();
+//   displayForecast(data);
+// }
 // // STEP 4: DISPLAY PREVIOUSLY SEARCHED CITIES ON PAGE
 // function displaySearchedCities() {
 //   searchedCityEl.innerHTML = "";
@@ -69,7 +98,7 @@ function init() {
 // }
 // displaySearchedCities();
 
-// // STEP 4: DISPLAY CURRENT WEATHER INFO
+// STEP 4: DISPLAY CURRENT WEATHER INFO
 // function displayCurrent(cityInput) {
 //   const todayURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${APIKey}&exclude=hourly,minutely,alerts&units=imperial`;
 //   fetch(todayURL)
