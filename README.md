@@ -1,4 +1,32 @@
-# weather-dashboard
+# Server-Side APIs: Weather Dashboard
+
+## Description
+
+Used Node.js, Inquirer, and MySQL to create a content management system with the purpose of providing the necessary tools for non-developers to easily view and interact with information stored in databases. Users can view departments, employees, roles, and update employee's information. A walkthrough video can be found in the link below:
+
+## Table of Contents
+
+- [Installation](#installation)
+
+- [Usage](#usage)
+
+- [App's Snapshots](#screenshots)
+
+- [Links](#links)
+
+- [Contact](#contact)
+
+## Usage
+
+## Screenshots
+
+## Links
+
+## Contact
+
+If you have any questions about this repository, please contact me directly at catacueto@gmail.com
+
+You can find more of my work at https://github.com/catcueto
 
 Server-Side APIs
 

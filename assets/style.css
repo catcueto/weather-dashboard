@@ -64,19 +64,27 @@ body {
 .displayCity {
   border: 0.5rem solid #34373a;
 }
-/* CURRENT WEATHER */
-.forecast-custom {
-  display: flex;
-  background-color: #80037f;
-  border-radius: 1rem;
-  color: #fff;
+
+#previous-searches {
+  margin-top: 1rem;
+  background-color: #f0f0f0;
+  width: 17.5rem;
+  padding: 5px 8px 5px 8px;
+  color: #000;
+  border-radius: 0.5rem;
+  border: none;
 }
 
+/* CURRENT WEATHER */
+#current-weather {
+  border-radius: 0.5rem;
+  border-style: solid;
+  padding: 2rem 0 0 2rem;
+}
 /* 5-DAY FORECAST */
 .title-forecast {
-  font-size: 2rem;
-  margin-top: 1rem;
-  margin-left: 15px;
+  font-size: 1.6rem;
+  margin-top: 4rem;
 }
 .custom-forecast {
   border: none;
@@ -88,11 +96,11 @@ body {
 .card {
   /* width: 20rem; */
   width: 200px;
-  height: 250px;
   margin-right: 20px;
   padding: 1rem;
-  background-color: #5d0d98;
-  color: #fff;
+  background-color: #007b8b;
+  color: #111010;
+  font-size: 1.2rem;
 }
 
 .five-days,
