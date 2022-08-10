@@ -59,7 +59,7 @@ function btnClick(event) {
 
 // TODO - STEP 5: FETCHING: Getting latitude and longitude coordinates for inputted city
 function webRequest(cityName) {
-  let geoRequestURL = geoRequest + "?q=" + cityName + "&appid=" + APIKey;
+  let geoRequestURL = geocodingRequest + "?q=" + cityName + "&appid=" + APIKey;
   // getting the latitute and longitude of the city the user searches
   fetch(geoRequestURL)
     .then(function (response) {
@@ -70,9 +70,7 @@ function webRequest(cityName) {
       console.log(data[0].lat, data[0].lon);
       // Getting today's date
       let today = moment().format("M/D/YYYY");
-      displayCityEl
-        .find("h3")
-        .text(data[0].name + ", " + container + " (" + today + ")");
+      displayCityEl.find("h3").text(data[0].name + ", " + " (" + today + ")");
       getWeather(data);
     });
 }
@@ -152,77 +150,75 @@ function indexScale(rating) {
   }
 }
 
-// STEP 3: FUNCITONALITY FOR PREVIOUSLY SEARCHED CITIES (BUTONS)
-// searchedCityEl.on("click", ".searchBtn", btnClick);
+// TODO - STEP 8: CREATE FUNCTION TO FORMAT INPUT OF CITY SEARCHED
 
-// function init() {
-//   //pulling local storage array, else assign variable to an empty array
-//   const searchHistory =
-//     JSON.parse(localStorage.getItem("priorSearch")) || citiesArray; //citiesArray is an empty array
-//   for (let i = 0; i < searchHistory.length; i++) {
-//     searchedCityEl.append(
-//       '<button class="btn bg-light-gray">' + searchHistory[i] + "</button>"
-//     );
-//     //adding a button for every searched city
-//     searchHistory.push({
-//       priorSearch: searchedCityEl.textContent,
-//     }); // adds the new list item to the list in localStorage
-//     localStorage.setItem("priorSearch", JSON.stringify(searchHistory)); // updates localStorage
-//   }
-// }
+function formatInput(str) {
+  // split() will separate name into individual words
+  let words = str.split(" ");
+  let output = "";
+  console.log(words);
+  // loops through the words and formats each one into Aaaaa
+  for (let i = 0; i < words.length; i++) {
+    console.log(words[i]);
+    words[i] =
+      words[i].substring(0, 1).toUpperCase() +
+      words[i].substring(1, words[i].length).toLowerCase();
+    // output = output + words[i], here we are concatenating/linking indexes into one array
+    output += words[i] + " ";
+    console.log(words[i]);
+  }
+  // trim method gets rid of spaces before or after; output = concatenated string
+  return output.trim();
+}
 
-// function btnClick(event) {
-//   event.preventDefault();
-//   webRequest($(this).text()); // sending a web request based on the button's text
-// }
+function appendNewButton(str) {
+  // iterate thru button's list
+  // if current search is already in list, stop function
+  for (let i = 0; i < previousSearchesEl.children().length; i++) {
+    if (previousSearchesEl.children().eq(i).text() === str) return;
+  }
+  // appending new btn to the ul
+  previousSearchesEl.append(
+    '<button class="btn bg-light-gray">' + str + "</button>"
+  );
+  const localSto =
+    JSON.parse(localStorage.getItem("priorSearch")) || citiesArray; // gets the localStorage data
+  // we push to add list in lS
+  localSto.push(str);
+  // updating localStorage
+  localStorage.setItem("pastSearches", JSON.stringify(localSto));
+}
 
-// eq(index) reduces set of matched elements to the specified index
-// using console to pull data for each element
-// displayCityEl.children().eq(1).attr("alt", data.current.weather[0].main);
-// displayCityEl
-//   .children()
-//   .eq(2)
-//   .text("Temperature: " + data.current.temp + "°F"); //
-// displayCityEl
-//   .children()
-//   .eq(3)
-//   .text("Wind Speed: " + data.current.wind_speed + " MPH");
-// displayCityEl
-//   .children()
-//   .eq(4)
-//   .text("Humidity: " + data.current.humidity + "%");
-// forecast5Days(data); // calls 5-day forecast
-
-//Accessing UV Index Info
-
-//       function uvIndex(scale) {
-//         let index = displayCityEl.children().eq(4).children();
-//         index.removeClass("low");
-//         index.removeClass("moderate");
-//         index.removeClass("high");
-//         index.remove("very-high");
-//         // Then we want to add desired color to each UV index based on the scale
-//         if (scale <= 2) {
-//           index.addClass("low");
-//         } else if (scale <= 3) {
-//           index.addClass("moderate");
-//         } else if (scale <= 7) {
-//           index.addClass("high");
-//         } else {
-//           index.addClass("very-high");
-//         }
-//       }
-
-// uvIndex();
-
-// PSEUDOCODE
-
-// STEP 1: Display Weather Dashbord at top of viewport (HTML, Bootstrap, CSS)
-// STEP 2: Left-side bar (FORM) that allows the user to search for a city
-// -- add search button --> event listener (click)
-// STEP 3: Selected city is added to the search history (left-side)
-/* STEP 4: When city is searched, then weather conditions are displayed (CURRENT & 5-DAY FORECAST)
-        a) User can see city name, today's date, icon representation of weather conditions, temperature, humidity, wind speed, and UV index
-        b) When user views UV index, this should be colored according to whether the conditions are favorable (green), moderate (orange), or severe (red)
-        c) 5-day forecast IsNCLUDES same sections (date + icon representation + temp + wind + humidty */
-//  STEP 5: When clicking on a city in search history, then user can see current and future conditions for selected city AGAIN
+function renderForecast(data) {
+  // Create a for loop that iterates through the data so we can display a 5-day forecast
+  for (let i = 0; i < 5; i++) {
+    let day = forecastEl.children().eq(i);
+    // rendering weather icon for indexed day
+    let icon = data.daily[i].weather[0].icon;
+    day
+      .children()
+      .eq(0)
+      .text(
+        moment()
+          .add(i + 1, "days")
+          .format("M/D/YYYY")
+      ); // display the date of the respective index
+    day
+      .children()
+      .eq(1)
+      .attr("src", "http://openweathermap.org/img/wn/" + icon + ".png"); // gets the icon for the indexed day
+    day.children().eq(1).attr("alt", data.daily[i].weather[0].main); // sets the alt text of the icon to be more descriptive
+    day
+      .children()
+      .eq(2)
+      .text("Temp: " + data.daily[i].temp.day + "°F"); // displays the temperature of the indexed day
+    day
+      .children()
+      .eq(3)
+      .text("Wind: " + data.daily[i].wind_speed + " MPH"); // displays the wind speed of the indexed day
+    day
+      .children()
+      .eq(4)
+      .text("Humidity: " + data.daily[i].humidity + "%"); // displays the humidity of the indexed day
+  }
+}
