@@ -3,11 +3,14 @@
   margin: 0 auto;
   font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
-  font-size: 1.2rem;
 }
 
 body {
   background-color: #f0f0f0;
+}
+
+.hideEl {
+  display: none;
 }
 
 /* WEATHER BANNER */
@@ -39,11 +42,11 @@ body {
   margin: 0;
 }
 
-.searchBtn {
+#search-btn {
   display: inline-block;
   background-color: #19008b;
   border: none;
-  padding: 5px 8px 5px 8px;
+  padding: 10px 8px 10px 8px;
   color: #fff;
   font-weight: 400;
   border-radius: 0.5rem;
@@ -70,7 +73,7 @@ body {
   background-color: #f0f0f0;
   width: 17.5rem;
   padding: 5px 8px 5px 8px;
-  color: #000;
+  color: #19008b;
   border-radius: 0.5rem;
   border: none;
 }
@@ -84,28 +87,17 @@ body {
 /* 5-DAY FORECAST */
 .title-forecast {
   font-size: 1.6rem;
-  margin-top: 4rem;
-}
-.custom-forecast {
-  border: none;
-  padding: 0.5rem;
-  color: darkslategrey;
-  border-radius: 1rem;
+  margin: 2rem 0 1rem 0;
 }
 
 .card {
   /* width: 20rem; */
-  width: 200px;
+  max-width: 400px;
   margin-right: 20px;
   padding: 1rem;
-  background-color: #007b8b;
+  background-color: #82aaff;
   color: #111010;
   font-size: 1.2rem;
-}
-
-.five-days,
-.scales {
-  display: flex;
 }
 
 .forecast-labels {

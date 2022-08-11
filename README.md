@@ -2,7 +2,7 @@
 
 ## Description
 
-Used Node.js, Inquirer, and MySQL to create a content management system with the purpose of providing the necessary tools for non-developers to easily view and interact with information stored in databases. Users can view departments, employees, roles, and update employee's information. A walkthrough video can be found in the link below:
+User can type in a city name above search button on the left side of the page. After clicking the search button, current weather will be displayed as well as the 5-day forecast. Weather information includes: temperature, wind speed, humidity, and UV-index. Previous searches will be visible below the search button, so that the user can access them again if needed.
 
 ## Table of Contents
 
