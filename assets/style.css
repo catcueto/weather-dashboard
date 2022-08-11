@@ -92,7 +92,7 @@ body {
 
 .card {
   /* width: 20rem; */
-  max-width: 400px;
+  width: 350px;
   margin-right: 20px;
   padding: 1rem;
   background-color: #82aaff;
