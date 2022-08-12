@@ -18,6 +18,8 @@ User can type in a city name above search button on the left side of the page. A
 
 ## Links
 
+Deployed app: https://catcueto.github.io/weather-dashboard/
+
 ## Contact
 
 Hey! If you want to connect or have any questions about this repository, please contact me directly at catacueto@gmail.com
