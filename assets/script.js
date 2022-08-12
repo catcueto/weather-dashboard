@@ -70,7 +70,7 @@ function webRequest(cityName) {
       console.log(data[0].lat, data[0].lon);
       // Getting today's date
       let today = moment().format("M/D/YYYY");
-      displayCityEl.find("h3").text(data[0].name + ", " + " (" + today + ")");
+      displayCityEl.find("h3").text(data[0].name + " (" + today + ")");
       getWeather(data);
     });
 }
@@ -132,18 +132,18 @@ function getWeather(geoCoordinates) {
 }
 
 function indexScale(rating) {
-  let indexColor = displayCityEl.children().eq(4).children();
-  // //removes any of the coloring that the index would have had
-  // indexColor.removeClass("minimal");
-  // indexColor.removeClass("low");
-  // indexColor.removeClass("moderate");
-  // indexColor.removeClass("high");
+  let indexColor = displayCityEl.children().eq(5).children();
+  // we have to remove pre-existing background color first
+  indexColor.removeClass("low");
+  indexColor.removeClass("moderate");
+  indexColor.removeClass("high");
+  indexColor.removeClass("very-high");
   // Adding correct color based on uv index rating
   if (rating < 2) {
     indexColor.addClass("low");
-  } else if (3 < rating < 5) {
+  } else if (rating < 5) {
     indexColor.addClass("moderate");
-  } else if (6 < rating < 7) {
+  } else if (rating < 7) {
     indexColor.addClass("high");
   } else {
     indexColor.addClass("very-high");
@@ -151,7 +151,6 @@ function indexScale(rating) {
 }
 
 // TODO - STEP 8: CREATE FUNCTION TO FORMAT INPUT OF CITY SEARCHED
-
 function formatInput(str) {
   // split() will separate name into individual words
   let words = str.split(" ");

@@ -16,7 +16,7 @@ body {
 /* WEATHER BANNER */
 .jumbotron {
   height: 0.5rem;
-  background: #111010;
+  background: #011627;
 }
 .weather-header {
   color: #f5efef;
@@ -44,7 +44,7 @@ body {
 
 #search-btn {
   display: inline-block;
-  background-color: #19008b;
+  background-color: #024173;
   border: none;
   padding: 10px 8px 10px 8px;
   color: #fff;
